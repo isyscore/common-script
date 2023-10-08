@@ -1,0 +1,137 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: "java"
+apply plugin: "org.jetbrains.kotlin.jvm"
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+group 'com.github.isyscore'
+version '1.0.0'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    // kotlin script
+    implementation "org.jetbrains.kotlin:kotlin-scripting-jsr223:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-scripting-jvm:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-scripting-jvm-host:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-compiler-embeddable:$kotlin_version"
+    // java
+    implementation "ch.obermuhlner:jshell-scriptengine:$jshell_version"
+    // js
+    implementation "org.graalvm.js:js-scriptengine:$graalvm_js_version"
+    implementation "org.graalvm.js:js-language:$graalvm_js_version"
+    implementation "org.graalvm.js:js-launcher:$graalvm_js_version"
+    // groovy
+    implementation "org.codehaus.groovy:groovy-all:$groovy_version"
+    // python
+    implementation "org.python:jython:$python_version"
+    // ruby
+    implementation "org.jruby:jruby:$ruby_version"
+    implementation "org.jruby:jruby-artifacts:$ruby_version"
+    // pascal
+
+    // julia
+
+    testImplementation "junit:junit:4.13.2"
+    testImplementation "com.github.isyscore:common-jvm:2.2.0"
+}
+
+sourceCompatibility = 1.8
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8" // "17"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8" // "17"
+}
+
+task sourcesJar(type: Jar) {
+//    classifier = "sources"
+    archiveClassifier = "sources"
+    from sourceSets.main.allJava
+}
+
+task javadocJar(type: Jar) {
+//    classifier = "javadoc"
+    archiveClassifier = "javadoc"
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+
+publishing {
+    publications {
+        mavenKotlin(MavenPublication) {
+            groupId = "com.github.isyscore"
+            artifactId = "common-script"
+            version = "1.0.0"
+            from components.java
+             artifact sourcesJar
+             artifact javadocJar
+
+            pom {
+                name = "common-script"
+                description = "iSysCore Common Kotlin/Script Library"
+                url = "https://github.com/isyscore/common-script"
+                packaging = "jar"
+
+                licenses {
+                    license {
+                        name = "MIT License"
+                        url = "https://github.com/isyscore/common-script/blob/main/LICENSE"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "isyscore"
+                        name = "isyscore"
+                        email = "hexj@isyscore.com"
+                    }
+                }
+                scm {
+                    connection = "https://github.com/isyscore/common-script"
+                    developerConnection =  "https://github.com/isyscore/common-script"
+                    url = "https://github.com/isyscore/common-script"
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "Release"
+            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            credentials {
+                username = "$nexus_username"
+                password = "$nexus_password"
+            }
+        }
+        maven {
+            name = "Snapshot"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+            credentials {
+                username = "$nexus_username"
+                password = "$nexus_password"
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenKotlin
+}
