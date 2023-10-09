@@ -41,10 +41,8 @@ dependencies {
     // ruby
     implementation "org.jruby:jruby:$ruby_version"
     implementation "org.jruby:jruby-artifacts:$ruby_version"
-    // pascal
 
-    // julia
-
+    // test
     testImplementation "junit:junit:4.13.2"
     testImplementation "com.github.isyscore:common-jvm:2.2.0"
 }

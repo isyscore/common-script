@@ -4,7 +4,7 @@ import com.isyscore.kotlin.scrpting.ScriptType
 import javax.script.ScriptEngine
 import javax.script.ScriptEngineManager
 
-interface LanguageIntf {
+fun interface LanguageIntf {
     fun getScriptEngine(mgr: ScriptEngineManager): ScriptEngine
 }
 
