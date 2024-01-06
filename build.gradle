@@ -45,6 +45,7 @@ dependencies {
     // test
     testImplementation "junit:junit:4.13.2"
     testImplementation "com.github.isyscore:common-jvm:2.2.0"
+    testImplementation "com.github.isyscore:numkt:1.0.0"
 }
 
 sourceCompatibility = 1.8
