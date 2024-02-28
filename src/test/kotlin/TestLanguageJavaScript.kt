@@ -1,8 +1,6 @@
 import com.isyscore.kotlin.scrpting.ScriptType
 import com.isyscore.kotlin.scrpting.Scripting
 import com.isyscore.kotlin.scrpting.ShareMode
-import com.isyscore.kotlin.scrpting.extension.V
-import com.oracle.truffle.polyglot.PolyglotMapEntryAndFunction
 import org.junit.Test
 
 class TestLanguageJavaScript {

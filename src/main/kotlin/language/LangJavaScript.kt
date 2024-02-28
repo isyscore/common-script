@@ -17,6 +17,7 @@ object LangJavaScript : LanguageIntf {
         System.setProperty("js.nashorn-compat", "true")
     }
 
+    // Compilable
     override fun getScriptEngine(mgr: ScriptEngineManager): ScriptEngine = try {
         val ctx = Context.newBuilder("js")
             .allowAllAccess(true)

@@ -1,5 +1,3 @@
-import com.isyscore.kotlin.common.HttpMethod
-import com.isyscore.kotlin.common.http
 import com.isyscore.kotlin.scrpting.ScriptType
 import com.isyscore.kotlin.scrpting.Scripting
 import com.isyscore.kotlin.scrpting.ShareMode

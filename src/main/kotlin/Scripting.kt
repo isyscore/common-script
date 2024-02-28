@@ -5,6 +5,8 @@ package com.isyscore.kotlin.scrpting
 import com.isyscore.kotlin.scrpting.ShareMode.*
 import com.isyscore.kotlin.scrpting.language.LangKotlin
 import com.isyscore.kotlin.scrpting.language.languages
+import javax.script.Compilable
+import javax.script.CompiledScript
 import javax.script.ScriptContext
 import javax.script.ScriptEngine
 import javax.script.ScriptEngineManager
@@ -54,6 +56,28 @@ class Scripting(
             e.eval(code) as? T to null
         } catch (ex: Exception) {
             null to ex
+        }
+    }
+
+    fun compileScript(code: String, params: Map<String, Any?>? = null): Triple<Boolean, CompiledScript?, Exception?> {
+        val e = when (mode) {
+            SINGLE_CONTEXT -> {
+                language.getScriptEngine(mgr)
+            }
+
+            else -> {
+                if (!this::engine.isInitialized) {
+                    engine = language.getScriptEngine(mgr)
+                }
+                engine
+            }
+        }
+        putParameters(e, params)
+        return try {
+            val cr = (e as Compilable).compile(code)
+            Triple(true, cr, null)
+        } catch (ex: Exception) {
+            Triple(false, null, ex)
         }
     }
 

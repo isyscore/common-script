@@ -3,9 +3,7 @@ import com.isyscore.kotlin.scrpting.Scripting
 import com.isyscore.kotlin.scrpting.ShareMode
 import com.isyscore.kotlin.scrpting.extension.getField
 import org.jruby.RubyObject
-import org.jruby.runtime.ThreadContext
 import org.junit.Test
-import org.python.core.PyInstance
 
 class TestLanguageRuby {
 

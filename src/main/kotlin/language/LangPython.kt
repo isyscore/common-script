@@ -1,5 +1,6 @@
 package com.isyscore.kotlin.scrpting.language
 
+import org.python.jsr223.PyScriptEngine
 import javax.script.ScriptEngine
 import javax.script.ScriptEngineManager
 
@@ -12,6 +13,7 @@ object LangPython : LanguageIntf {
         }
     }
 
+    // Compilable
     override fun getScriptEngine(mgr: ScriptEngineManager): ScriptEngine =
-        mgr.getEngineByName("python")
+        mgr.getEngineByName("python") as PyScriptEngine
 }
